@@ -32,10 +32,11 @@ public class SpawnManager : MonoBehaviour
 
         while (gameIsOn)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
 
             System.Random random = new System.Random();
-            EntryPoint randomEntry = EntryPoints[random.Next(0, EntryPoints.Length)].GetComponent<EntryPoint>();
+            int index = random.Next(0, EntryPoints.Length);
+            EntryPoint randomEntry = EntryPoints[index].GetComponent<EntryPoint>();
 
             if (!randomEntry.listIsFull)
             {
@@ -44,6 +45,10 @@ public class SpawnManager : MonoBehaviour
 
                 Debug.Log(message.GetComponent<Message>().messageText);
                 Debug.Log(message.GetComponent<Message>().messageType);
+            }
+            else
+            {
+                Debug.Log("Full");
             }
         }
     }

@@ -37,8 +37,9 @@ public class PlayerControls : MonoBehaviour
                 selectedEntry.GiveMessageToPlayer(requestHolder);
                 playerIsHoldingMessage = true;
             }
-           
+
         }
+
 
         this.MovePlayer();
 

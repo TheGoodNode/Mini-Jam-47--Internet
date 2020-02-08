@@ -48,7 +48,7 @@ public class EntryPoint : MonoBehaviour
     }
 
     public bool listIsFull = false;
-    public List<GameObject> arrayOfMessages;
+    public List<GameObject> arrayOfMessages = new List<GameObject>(1);
     public void SetMessageToSlot(GameObject message)
     {
         for (int index = 0; index < messageEntryPos.Count ; index++)
@@ -71,14 +71,32 @@ public class EntryPoint : MonoBehaviour
 
     public void GiveMessageToPlayer(GameObject holder)
     {
-
         if (arrayOfMessages[0] != null)
         {
+            //move message to player
             arrayOfMessages[0].transform.parent = holder.transform;
             arrayOfMessages[0].transform.position = holder.transform.position;
+            messageEntryPos[0].slotIsAquired = false;
+            listIsFull = false;
+            //if second is aquired
+            if (arrayOfMessages[1])
+            {
+                //moving second message to first slot
+                arrayOfMessages[1].transform.position = messageEntryPos[0].messageSlot.transform.position;
+                messageEntryPos[1].slotIsAquired = false;
+                messageEntryPos[0].slotIsAquired = true;
+
+                arrayOfMessages.Remove(arrayOfMessages[0]);
+
+            }
+            //if second is empty
+            else
+            {
+                messageEntryPos[0].slotIsAquired = false;
+                arrayOfMessages.Remove(arrayOfMessages[0]);
+            }
         }
 
-        arrayOfMessages[1].transform.position = messageEntryPos[0].messageSlot.transform.position;
     }
 
 
