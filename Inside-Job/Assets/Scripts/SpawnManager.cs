@@ -6,8 +6,18 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
 
+    public GameObject messagePrefab;
+
+
+    GameObject[] EntryPoints;
+
+    [HideInInspector]
+    public bool gameIsOn = false;
+
     private void Start()
     {
+        gameIsOn = true;
+        EntryPoints = GameObject.FindGameObjectsWithTag("RequestEntryPoint");
         StartCoroutine(CreateMessage());
     }
 
@@ -19,72 +29,22 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator CreateMessage()
     {
-        yield return new WaitForSeconds(3f);
 
-        Debug.Log("hello World");
-        Message message = new Message();
-        Debug.Log(message.messageText);
-        Debug.Log(message.messageType);
-
-    }
-
-}
-
-
-enum MessageTypes
-{
-    Authentication,
-    Read
-}
-
-class Message
-{
-    public string messageText { get; set; }
-    public MessageTypes messageType { get; set; }
-
-    public Message()
-    {
-        messageType = AssignMessageType();
-        messageText = HandleReturnMessageText();
-    }
-
-    private string[] AuthenticationText =
-    {
-        "SignIn",
-        "logIn"
-    };
-
-    private string[] Read =
-    {
-        "list news feed",
-        "open profile page"
-    };
-
-    private string HandleReturnMessageText()
-    {
-        int index;
-        switch (messageType)
+        while (gameIsOn)
         {
-            case MessageTypes.Authentication:
-                 index = UnityEngine.Random.Range(0, AuthenticationText.Length);
-                return AuthenticationText[index];
+            yield return new WaitForSeconds(3f);
 
-            case MessageTypes.Read:
-                 index = UnityEngine.Random.Range(0, Read.Length);
-                return Read[index];
-            default:
-                return "";
+            System.Random random = new System.Random();
+            EntryPoint randomEntry = EntryPoints[random.Next(0, EntryPoints.Length)].GetComponent<EntryPoint>();
+
+            if (!randomEntry.listIsFull)
+            {
+                GameObject message = Instantiate(messagePrefab);
+                randomEntry.SetMessageToSlot(message);
+
+                Debug.Log(message.GetComponent<Message>().messageText);
+                Debug.Log(message.GetComponent<Message>().messageType);
+            }
         }
     }
-
-
-
-    private MessageTypes AssignMessageType()
-    {
-        Array values = Enum.GetValues(typeof(MessageTypes));
-        System.Random random = new System.Random();
-        MessageTypes randomMessageType = (MessageTypes)values.GetValue(random.Next(values.Length));
-        return randomMessageType;
-    }
-
 }

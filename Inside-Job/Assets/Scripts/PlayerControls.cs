@@ -1,78 +1,88 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EntryPointscs;
 
-namespace PlayerControlcs
+
+public class PlayerControls : MonoBehaviour
 {
-    public class PlayerControls : MonoBehaviour
+
+    Rigidbody2D rigidbody2d;
+
+    public float PlayerSpeed;
+
+    public GameObject requestHolder;
+
+    bool isHoldingRequest = false;
+
+    [HideInInspector]
+    public bool playerIsOverEntryPoint = false;
+
+
+    // Start is called before the first frame update
+    void Start()
     {
-        Rigidbody2D rigidbody2d;
+        rigidbody2d = GetComponent<Rigidbody2D>();
+    }
 
-        public float PlayerSpeed;
-
-        public GameObject requestHolder;
-
-        bool isHoldingRequest = false;
-
-        [HideInInspector]
-        public bool playerIsOverEntryPoint = false;
-
-
-        // Start is called before the first frame update
-        void Start()
+    [HideInInspector]
+    public bool playerIsHoldingMessage = false;
+    private void Update()
+    {
+        if (playerIsOverEntryPoint && !playerIsHoldingMessage)
         {
-            rigidbody2d = GetComponent<Rigidbody2D>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            this.MovePlayer();
-
             if (Input.GetKeyDown(KeyCode.E))
             {
-                HoldRequest();
+                Debug.Log("Trying to hold the message");
+                selectedEntry.currentEntryPoint.TakeMessage();
+                selectedEntry.GiveMessageToPlayer(requestHolder);
+                playerIsHoldingMessage = true;
             }
+           
         }
 
-        private void HoldRequest()
+        this.MovePlayer();
+
+    }
+
+   
+
+
+    private void MovePlayer()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Vector2 move = new Vector2(horizontal, vertical);
+        Vector2 position = rigidbody2d.position;
+
+        position += move * PlayerSpeed * Time.deltaTime;
+        rigidbody2d.MovePosition(position);
+
+    }
+
+
+    EntryPoint selectedEntry;
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name == "EntryPoint")
         {
-            if (isHoldingRequest)
-            {
-                Debug.Log("Started holding the request");
-                isHoldingRequest = true;
-            }
-        }
-
-        private void MovePlayer()
-        {
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-
-            Vector2 move = new Vector2(horizontal, vertical);
-            Vector2 position = rigidbody2d.position;
-
-            position += move * PlayerSpeed * Time.deltaTime;
-            rigidbody2d.MovePosition(position);
-
-        }
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            Debug.Log(other.name);
-            if(other.gameObject.name == "EntryPoint")
-            {
-                playerIsOverEntryPoint = true;
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (other.gameObject.name == "EntryPoint")
-            {
-                playerIsOverEntryPoint = false;
-            }
+            playerIsOverEntryPoint = true;
+            EntryPoint entryPoint = other.gameObject.GetComponent<EntryPoint>();
+            selectedEntry = entryPoint;
         }
 
     }
+
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.name == "EntryPoint")
+        {
+            playerIsOverEntryPoint = false;
+        }
+    }
+
+
+
+
 }
