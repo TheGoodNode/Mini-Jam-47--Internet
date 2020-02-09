@@ -6,7 +6,9 @@ using UnityEngine;
 public enum MessageTypes
 {
     Authentication,
-    Read
+    Read,
+    Create,
+    Delete
 }
 
 public class Message : MonoBehaviour
@@ -78,6 +80,7 @@ public class Message : MonoBehaviour
     {
         gameObject.GetComponent<Animation>().Play("SendResponse");
         gameObject.GetComponent<Animation>().wrapMode = WrapMode.Once;
+        GameManager.instance.IncrementAmountResponseSent();
         //float duration = gameObject.GetComponent<Animation>().clip.length;
         Destroy(gameObject, 2.0f);
     }
@@ -99,6 +102,18 @@ public class Message : MonoBehaviour
         "open profile page"
     };
 
+    private string[] Create =
+    {
+        "SignUp",
+        "Post Pictures",
+    };
+
+    private string[] Delete =
+    {
+        "Delete Account",
+        "Delete Post"
+    };
+
     private string HandleReturnMessageText()
     {
         System.Random random = new System.Random();
@@ -112,6 +127,14 @@ public class Message : MonoBehaviour
             case MessageTypes.Read:
                 index = random.Next(0, Read.Length);
                 return Read[index];
+
+            case MessageTypes.Create:
+                index = random.Next(0, Create.Length);
+                return Create[index];
+
+            case MessageTypes.Delete:
+                index = random.Next(0, Delete.Length);
+                return Delete[index];
             default:
                 return "";
         }
@@ -124,6 +147,7 @@ public class Message : MonoBehaviour
         Array values = Enum.GetValues(typeof(MessageTypes));
         System.Random random = new System.Random();
         MessageTypes randomMessageType = (MessageTypes)values.GetValue(random.Next(values.Length));
+        Debug.LogWarning(randomMessageType);
         return randomMessageType;
     }
 }

@@ -163,7 +163,6 @@ public class Response: entry
             message.GetComponent<Message>().responseTimer.gameObject.SetActive(true);
             messageEntryPos[0].slotIsAquired = true;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControls>().playerIsHoldingMessage = false;
-            Debug.Log("Done");
         }
     }
 
@@ -171,10 +170,8 @@ public class Response: entry
     {
         if (arrayOfMessages[0])
         {
-            Debug.LogWarning("array is full");
             if (arrayOfMessages[0].GetComponent<Message>().responseMessageIsReady)
             {
-                Debug.LogWarning("message is ready");
                 messageEntryPos[0].slotIsAquired = false;
                 arrayOfMessages[0].transform.position = holder.transform.position;
                 arrayOfMessages[0].transform.parent = holder.transform;
