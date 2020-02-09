@@ -151,6 +151,7 @@ MonoBehaviour:
     slotIsAquired: 0
   - messageSlot: {fileID: 7116063194029438019}
     slotIsAquired: 0
+  arrayOfMessages: []
 --- !u!1 &7116063194029438019
 GameObject:
   m_ObjectHideFlags: 0

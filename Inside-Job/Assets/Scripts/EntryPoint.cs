@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class MessagesEntryPosition
+{
+    public GameObject messageSlot;
+    [HideInInspector]
+    public bool slotIsAquired = false;
+}
+
 public class EntryPoint : MonoBehaviour
 {
     
@@ -15,31 +23,21 @@ public class EntryPoint : MonoBehaviour
 
 
     public entry currentEntryPoint;
-
-    [System.Serializable]
-    public class MessagesEntryPosition
-    {
-       public GameObject messageSlot;
-       [HideInInspector]
-       public bool slotIsAquired = false;
-    }
+    
     public List<MessagesEntryPosition> messageEntryPos;
+    public List<GameObject> arrayOfMessages = new List<GameObject>(1);
+
 
     private void Awake()
-    {
-        
-    }
-
-    void Start()
     {
         switch (entryPointType)
         {
             case EntryPointType.request:
-                currentEntryPoint = new Request();
+                currentEntryPoint = new Request(messageEntryPos, arrayOfMessages);
                 break;
 
             case EntryPointType.response:
-               currentEntryPoint = new Response();
+                currentEntryPoint = new Response();
                 break;
 
             default:
@@ -47,11 +45,32 @@ public class EntryPoint : MonoBehaviour
         }
     }
 
-    public bool listIsFull = false;
-    public List<GameObject> arrayOfMessages = new List<GameObject>(1);
-    public void SetMessageToSlot(GameObject message)
+    
+
+
+}
+
+public class Request : entry
+{
+    List<MessagesEntryPosition> messageEntryPos;
+    List<GameObject> arrayOfMessages;
+
+    //public bool ListIsFull { get; set; }
+
+
+    public Request(List<MessagesEntryPosition> messageSlotPos, List<GameObject> messageArray)
     {
-        for (int index = 0; index < messageEntryPos.Count ; index++)
+        messageEntryPos = messageSlotPos;
+        arrayOfMessages = messageArray;
+    }
+
+    
+
+
+
+    public override void SetMessageToSlot(GameObject message)
+    {
+        for (int index = 0; index < messageEntryPos.Count; index++)
         {
             if (!messageEntryPos[index].slotIsAquired)
             {
@@ -62,22 +81,22 @@ public class EntryPoint : MonoBehaviour
             }
 
 
-            if(messageEntryPos.IndexOf(messageEntryPos[index]) == 0)
+            if (messageEntryPos.IndexOf(messageEntryPos[index]) == 0)
             {
-                listIsFull = true;
+                ListIsFull = true;
             }
         }
     }
 
-    public void GiveMessageToPlayer(GameObject holder)
+    public override void GiveMessageToPlayer(GameObject holder)
     {
-        if (arrayOfMessages[0] != null)
+        if (arrayOfMessages[0])
         {
             //move message to player
             arrayOfMessages[0].transform.parent = holder.transform;
             arrayOfMessages[0].transform.position = holder.transform.position;
             messageEntryPos[0].slotIsAquired = false;
-            listIsFull = false;
+            ListIsFull = false;
             //if second is aquired
             if (arrayOfMessages[1])
             {
@@ -96,39 +115,18 @@ public class EntryPoint : MonoBehaviour
                 arrayOfMessages.Remove(arrayOfMessages[0]);
             }
         }
-
-    }
-
-
-    public void HoldMessage()
-    {
-
-    }
-}
-
-public class Request: entry
-{
-
-    public override void SetMessage()
-    {
-        Debug.Log("Setting Request Message");
-    }
-
-    public override void TakeMessage()
-    {
-        Debug.Log("Taking Request Message");
     }
 }
 
 
 public class Response: entry
 {
-    public override void SetMessage()
+    public override void SetMessageToSlot(GameObject message)
     {
         Debug.Log("Setting Response Message");
     }
 
-    public override void TakeMessage()
+    public override void GiveMessageToPlayer(GameObject holder)
     {
         Debug.Log("Taking Response Message");
     }
@@ -139,12 +137,19 @@ public class Response: entry
 public class entry
 {
 
-    public virtual void SetMessage()
+    public bool ListIsFull;
+
+    public entry()
+    {
+        ListIsFull = false;
+    }
+
+    public virtual void SetMessageToSlot(GameObject message)
     {
        
     }
 
-    public virtual void TakeMessage()
+    public virtual void GiveMessageToPlayer(GameObject holder)
     {
 
     }

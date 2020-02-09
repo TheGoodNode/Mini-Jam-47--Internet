@@ -12,8 +12,6 @@ public class PlayerControls : MonoBehaviour
 
     public GameObject requestHolder;
 
-    bool isHoldingRequest = false;
-
     [HideInInspector]
     public bool playerIsOverEntryPoint = false;
 
@@ -32,14 +30,11 @@ public class PlayerControls : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("Trying to hold the message");
-                selectedEntry.currentEntryPoint.TakeMessage();
                 selectedEntry.GiveMessageToPlayer(requestHolder);
                 playerIsHoldingMessage = true;
             }
 
         }
-
 
         this.MovePlayer();
 
@@ -62,13 +57,13 @@ public class PlayerControls : MonoBehaviour
     }
 
 
-    EntryPoint selectedEntry;
+    entry selectedEntry;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.name == "EntryPoint")
         {
             playerIsOverEntryPoint = true;
-            EntryPoint entryPoint = other.gameObject.GetComponent<EntryPoint>();
+            entry entryPoint = other.gameObject.GetComponent<EntryPoint>().currentEntryPoint;
             selectedEntry = entryPoint;
         }
 

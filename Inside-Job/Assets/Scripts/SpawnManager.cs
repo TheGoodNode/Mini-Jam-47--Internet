@@ -38,17 +38,13 @@ public class SpawnManager : MonoBehaviour
             int index = random.Next(0, EntryPoints.Length);
             EntryPoint randomEntry = EntryPoints[index].GetComponent<EntryPoint>();
 
-            if (!randomEntry.listIsFull)
+            if (!randomEntry.currentEntryPoint.ListIsFull)
             {
                 GameObject message = Instantiate(messagePrefab);
-                randomEntry.SetMessageToSlot(message);
+                randomEntry.currentEntryPoint.SetMessageToSlot(message);
 
                 Debug.Log(message.GetComponent<Message>().messageText);
                 Debug.Log(message.GetComponent<Message>().messageType);
-            }
-            else
-            {
-                Debug.Log("Full");
             }
         }
     }
