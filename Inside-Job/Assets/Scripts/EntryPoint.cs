@@ -25,7 +25,8 @@ public class EntryPoint : MonoBehaviour
     public entry currentEntryPoint;
     
     public List<MessagesEntryPosition> messageEntryPos;
-    public List<GameObject> arrayOfMessages = new List<GameObject>(1);
+    [HideInInspector]
+    public List<Transform> arrayOfMessages = new List<Transform>(1);
 
 
     private void Awake()
@@ -37,7 +38,7 @@ public class EntryPoint : MonoBehaviour
                 break;
 
             case EntryPointType.response:
-                currentEntryPoint = new Response();
+                currentEntryPoint = new Response(messageEntryPos, arrayOfMessages);
                 break;
 
             default:
@@ -53,12 +54,12 @@ public class EntryPoint : MonoBehaviour
 public class Request : entry
 {
     List<MessagesEntryPosition> messageEntryPos;
-    List<GameObject> arrayOfMessages;
+    List<Transform> arrayOfMessages;
 
     //public bool ListIsFull { get; set; }
 
 
-    public Request(List<MessagesEntryPosition> messageSlotPos, List<GameObject> messageArray)
+    public Request(List<MessagesEntryPosition> messageSlotPos, List<Transform> messageArray)
     {
         messageEntryPos = messageSlotPos;
         arrayOfMessages = messageArray;
@@ -68,7 +69,7 @@ public class Request : entry
 
 
 
-    public override void SetMessageToSlot(GameObject message)
+    public override void SetMessageToSlot(Transform message)
     {
         for (int index = 0; index < messageEntryPos.Count; index++)
         {
@@ -121,9 +122,23 @@ public class Request : entry
 
 public class Response: entry
 {
-    public override void SetMessageToSlot(GameObject message)
+
+    List<MessagesEntryPosition> messageEntryPos;
+    List<Transform> arrayOfMessages;
+
+
+    public Response(List<MessagesEntryPosition> messageSlotPos, List<Transform> messageArray)
+    {
+        messageEntryPos = messageSlotPos;
+        arrayOfMessages = messageArray;
+    }
+
+    public override void SetMessageToSlot(Transform message)
     {
         Debug.Log("Setting Response Message");
+        message.transform.parent = null;
+        message.transform.position = messageEntryPos[0].messageSlot.transform.position;
+        Debug.Log("Done");
     }
 
     public override void GiveMessageToPlayer(GameObject holder)
@@ -144,7 +159,7 @@ public class entry
         ListIsFull = false;
     }
 
-    public virtual void SetMessageToSlot(GameObject message)
+    public virtual void SetMessageToSlot(Transform message)
     {
        
     }

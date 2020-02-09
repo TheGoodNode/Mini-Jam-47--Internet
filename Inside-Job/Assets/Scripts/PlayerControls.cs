@@ -26,15 +26,25 @@ public class PlayerControls : MonoBehaviour
     public bool playerIsHoldingMessage = false;
     private void Update()
     {
-        if (playerIsOverEntryPoint && !playerIsHoldingMessage)
+        if (playerIsOverEntryPoint)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                selectedEntry.GiveMessageToPlayer(requestHolder);
-                playerIsHoldingMessage = true;
+                Debug.Log("OVER HERE!!!" + playerIsHoldingMessage);
+                if (!playerIsHoldingMessage)
+                {
+                    selectedEntry.GiveMessageToPlayer(requestHolder);
+                    playerIsHoldingMessage = true;
+                }
+                else
+                {
+                    Transform message = requestHolder.transform.GetChild(0);
+                    selectedEntry.SetMessageToSlot(message);
+                }
             }
-
         }
+
+
 
         this.MovePlayer();
 
@@ -66,6 +76,8 @@ public class PlayerControls : MonoBehaviour
             entry entryPoint = other.gameObject.GetComponent<EntryPoint>().currentEntryPoint;
             selectedEntry = entryPoint;
         }
+
+        
 
     }
 

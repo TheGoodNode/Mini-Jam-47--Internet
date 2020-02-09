@@ -40,7 +40,7 @@ public class SpawnManager : MonoBehaviour
 
             if (!randomEntry.currentEntryPoint.ListIsFull)
             {
-                GameObject message = Instantiate(messagePrefab);
+                Transform message = Instantiate(messagePrefab).transform;
                 randomEntry.currentEntryPoint.SetMessageToSlot(message);
 
                 Debug.Log(message.GetComponent<Message>().messageText);
