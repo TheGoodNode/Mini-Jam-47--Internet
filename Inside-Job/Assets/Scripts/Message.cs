@@ -11,14 +11,66 @@ public enum MessageTypes
 
 public class Message : MonoBehaviour
 {
-    public string messageText;
     public MessageTypes messageType;
+
+    public float messageDelay = 5;
+    float countDown;
+
+    [SerializeField]public TextMesh timer;
+
+    [HideInInspector]
+    public string messageText;
+    public TextMesh MessageText;
+
+    public TextMesh responseTimer;
+    private float responseTimeDelay = 3.0f;
+
+    public GameObject ReadyText;
 
     private void Start()
     {
+        responseTimer.text = Convert.ToInt32(responseTimeDelay).ToString();
+        countDown = messageDelay;
+        timer.text = countDown.ToString();
         messageType = AssignMessageType();
         messageText = HandleReturnMessageText();
+        MessageText.text = messageText;
     }
+
+    [HideInInspector]
+    public bool startedCreatingResponse = false;
+    [HideInInspector]
+    public bool responseMessageIsReady = false;
+    private void Update()
+    {
+        if(countDown >= 0)
+        {
+            countDown -= Time.deltaTime;
+            //GameManager.instance.EndGame();
+            timer.text = Convert.ToInt32(countDown).ToString();
+        }
+
+        if (startedCreatingResponse)
+        {
+            if (responseTimeDelay >= 0)
+            {
+                responseTimeDelay -= Time.deltaTime;
+                responseTimer.text = Convert.ToInt32(responseTimeDelay).ToString();
+                if (responseTimeDelay <= 0)
+                {
+                    ReadyText.gameObject.SetActive(true);
+                    startedCreatingResponse = false;
+                    responseMessageIsReady = true;
+                }
+            }
+
+           
+        }
+    }
+
+  
+
+
 
 
     private string[] AuthenticationText =
@@ -64,5 +116,4 @@ public class Message : MonoBehaviour
         MessageTypes randomMessageType = (MessageTypes)values.GetValue(random.Next(values.Length));
         return randomMessageType;
     }
-
 }

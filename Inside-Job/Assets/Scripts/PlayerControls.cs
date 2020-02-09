@@ -34,12 +34,12 @@ public class PlayerControls : MonoBehaviour
                 if (!playerIsHoldingMessage)
                 {
                     selectedEntry.GiveMessageToPlayer(requestHolder);
-                    playerIsHoldingMessage = true;
                 }
                 else
                 {
                     Transform message = requestHolder.transform.GetChild(0);
                     selectedEntry.SetMessageToSlot(message);
+                    playerIsHoldingMessage = false;
                 }
             }
         }
@@ -76,9 +76,6 @@ public class PlayerControls : MonoBehaviour
             entry entryPoint = other.gameObject.GetComponent<EntryPoint>().currentEntryPoint;
             selectedEntry = entryPoint;
         }
-
-        
-
     }
 
 

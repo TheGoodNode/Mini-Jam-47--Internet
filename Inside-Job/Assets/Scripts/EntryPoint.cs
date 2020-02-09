@@ -96,6 +96,7 @@ public class Request : entry
             //move message to player
             arrayOfMessages[0].transform.parent = holder.transform;
             arrayOfMessages[0].transform.position = holder.transform.position;
+            holder.GetComponentInParent<PlayerControls>().playerIsHoldingMessage = true;
             messageEntryPos[0].slotIsAquired = false;
             ListIsFull = false;
             //if second is aquired
@@ -135,15 +136,34 @@ public class Response: entry
 
     public override void SetMessageToSlot(Transform message)
     {
-        Debug.Log("Setting Response Message");
-        message.transform.parent = null;
-        message.transform.position = messageEntryPos[0].messageSlot.transform.position;
-        Debug.Log("Done");
+        if (!messageEntryPos[0].slotIsAquired)
+        {
+            Debug.Log("Setting Response Message");
+            message.transform.position = messageEntryPos[0].messageSlot.transform.position;
+            arrayOfMessages.Add(message);
+            message.transform.parent = null;
+            message.GetComponent<Message>().startedCreatingResponse = true;
+            message.GetComponent<Message>().responseTimer.gameObject.SetActive(true);
+            messageEntryPos[0].slotIsAquired = true;
+
+            Debug.Log("Done");
+        }
     }
 
     public override void GiveMessageToPlayer(GameObject holder)
     {
-        Debug.Log("Taking Response Message");
+        if (arrayOfMessages[0])
+        {
+            if (arrayOfMessages[0].GetComponent<Message>().responseMessageIsReady)
+            {
+                arrayOfMessages[0].transform.position = holder.transform.position;
+                arrayOfMessages[0].transform.parent = holder.transform;
+                arrayOfMessages[0].GetComponent<Message>().ReadyText.gameObject.SetActive(false);
+                arrayOfMessages[0].GetComponent<Message>().responseTimer.gameObject.SetActive(false);
+
+            }
+
+        }
     }
 }
 

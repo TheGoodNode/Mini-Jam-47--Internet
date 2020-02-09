@@ -48,4 +48,9 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
+
+    public void StopSpawning()
+    {
+
+    }
 }
