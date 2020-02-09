@@ -465,6 +465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6925330093634707170}
   - component: {fileID: 3590995386106957895}
+  - component: {fileID: 7773372984449339005}
   m_Layer: 0
   m_Name: Message
   m_TagString: Untagged
@@ -511,3 +512,22 @@ MonoBehaviour:
   responseTimer: {fileID: 482084669}
   ReadyText: {fileID: 1225229103}
   startedCreatingResponse: 0
+  responseMessageIsReady: 0
+  MessageIsReady: 0
+--- !u!111 &7773372984449339005
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6925330093634707172}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: ec3e9ef4da979e74b87e28c54bea7359, type: 2}
+  - {fileID: 7400000, guid: c4c7f5d4cbd319d44a9d86e75714eda7, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0

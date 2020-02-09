@@ -42,9 +42,6 @@ public class SpawnManager : MonoBehaviour
             {
                 Transform message = Instantiate(messagePrefab).transform;
                 randomEntry.currentEntryPoint.SetMessageToSlot(message);
-
-                Debug.Log(message.GetComponent<Message>().messageText);
-                Debug.Log(message.GetComponent<Message>().messageType);
             }
         }
     }

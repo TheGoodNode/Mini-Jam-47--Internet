@@ -22,8 +22,8 @@ public class PlayerControls : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
     }
 
-    [HideInInspector]
-    public bool playerIsHoldingMessage = false;
+
+    [HideInInspector] public bool playerIsHoldingMessage = false;
     private void Update()
     {
         if (playerIsOverEntryPoint)
@@ -33,13 +33,14 @@ public class PlayerControls : MonoBehaviour
                 Debug.Log("OVER HERE!!!" + playerIsHoldingMessage);
                 if (!playerIsHoldingMessage)
                 {
+                    Debug.Log("Getting Message");
                     selectedEntry.GiveMessageToPlayer(requestHolder);
                 }
-                else
+                else if(playerIsHoldingMessage && !playerIsOverRequestEntryPoint)
                 {
+                    Debug.Log("Setting Message");
                     Transform message = requestHolder.transform.GetChild(0);
                     selectedEntry.SetMessageToSlot(message);
-                    playerIsHoldingMessage = false;
                 }
             }
         }
@@ -68,6 +69,7 @@ public class PlayerControls : MonoBehaviour
 
 
     entry selectedEntry;
+    [HideInInspector] public bool playerIsOverRequestEntryPoint = false;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.name == "EntryPoint")
@@ -75,6 +77,11 @@ public class PlayerControls : MonoBehaviour
             playerIsOverEntryPoint = true;
             entry entryPoint = other.gameObject.GetComponent<EntryPoint>().currentEntryPoint;
             selectedEntry = entryPoint;
+            if(other.gameObject.tag == "RequestEntryPoint")
+            {
+                Debug.LogWarning("over request point");
+                playerIsOverRequestEntryPoint = true;
+            }
         }
     }
 
@@ -84,6 +91,7 @@ public class PlayerControls : MonoBehaviour
         if (other.gameObject.name == "EntryPoint")
         {
             playerIsOverEntryPoint = false;
+            playerIsOverRequestEntryPoint = false;
         }
     }
 

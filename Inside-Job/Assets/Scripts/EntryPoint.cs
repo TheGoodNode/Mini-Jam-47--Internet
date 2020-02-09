@@ -16,7 +16,9 @@ public class EntryPoint : MonoBehaviour
     public enum EntryPointType
     {
         request,
-        response
+        response,
+        responseSender,
+        messageDestroyer
     }
 
     public EntryPointType entryPointType;
@@ -41,6 +43,13 @@ public class EntryPoint : MonoBehaviour
                 currentEntryPoint = new Response(messageEntryPos, arrayOfMessages);
                 break;
 
+            case EntryPointType.messageDestroyer:
+                currentEntryPoint = new MessageDestroyer(messageEntryPos);
+                break;
+
+            case EntryPointType.responseSender:
+                currentEntryPoint = new ResponseSender(messageEntryPos);
+                break;
             default:
                 break;
         }
@@ -93,28 +102,35 @@ public class Request : entry
     {
         if (arrayOfMessages[0])
         {
-            //move message to player
-            arrayOfMessages[0].transform.parent = holder.transform;
-            arrayOfMessages[0].transform.position = holder.transform.position;
-            holder.GetComponentInParent<PlayerControls>().playerIsHoldingMessage = true;
-            messageEntryPos[0].slotIsAquired = false;
-            ListIsFull = false;
-            //if second is aquired
-            if (arrayOfMessages[1])
+            if (!holder.GetComponentInParent<PlayerControls>().playerIsHoldingMessage)
             {
-                //moving second message to first slot
-                arrayOfMessages[1].transform.position = messageEntryPos[0].messageSlot.transform.position;
-                messageEntryPos[1].slotIsAquired = false;
-                messageEntryPos[0].slotIsAquired = true;
+                Debug.LogWarning("NOOOO!!!!");
+                holder.GetComponentInParent<PlayerControls>().playerIsHoldingMessage = true;
 
-                arrayOfMessages.Remove(arrayOfMessages[0]);
 
-            }
-            //if second is empty
-            else
-            {
+                //move message to player
+                arrayOfMessages[0].transform.parent = holder.transform;
+                arrayOfMessages[0].transform.position = holder.transform.position;
+                holder.GetComponentInParent<PlayerControls>().playerIsHoldingMessage = true;
                 messageEntryPos[0].slotIsAquired = false;
-                arrayOfMessages.Remove(arrayOfMessages[0]);
+                ListIsFull = false;
+                //if second is aquired
+                if (arrayOfMessages[1])
+                {
+                    //moving second message to first slot
+                    arrayOfMessages[1].transform.position = messageEntryPos[0].messageSlot.transform.position;
+                    messageEntryPos[1].slotIsAquired = false;
+                    messageEntryPos[0].slotIsAquired = true;
+
+                    arrayOfMessages.Remove(arrayOfMessages[0]);
+
+                }
+                //if second is empty
+                else
+                {
+                    messageEntryPos[0].slotIsAquired = false;
+                    arrayOfMessages.Remove(arrayOfMessages[0]);
+                }
             }
         }
     }
@@ -138,6 +154,7 @@ public class Response: entry
     {
         if (!messageEntryPos[0].slotIsAquired)
         {
+            Debug.LogWarning("WHAT THE HELL");
             Debug.Log("Setting Response Message");
             message.transform.position = messageEntryPos[0].messageSlot.transform.position;
             arrayOfMessages.Add(message);
@@ -145,7 +162,7 @@ public class Response: entry
             message.GetComponent<Message>().startedCreatingResponse = true;
             message.GetComponent<Message>().responseTimer.gameObject.SetActive(true);
             messageEntryPos[0].slotIsAquired = true;
-
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControls>().playerIsHoldingMessage = false;
             Debug.Log("Done");
         }
     }
@@ -154,16 +171,65 @@ public class Response: entry
     {
         if (arrayOfMessages[0])
         {
+            Debug.LogWarning("array is full");
             if (arrayOfMessages[0].GetComponent<Message>().responseMessageIsReady)
             {
+                Debug.LogWarning("message is ready");
+                messageEntryPos[0].slotIsAquired = false;
                 arrayOfMessages[0].transform.position = holder.transform.position;
                 arrayOfMessages[0].transform.parent = holder.transform;
                 arrayOfMessages[0].GetComponent<Message>().ReadyText.gameObject.SetActive(false);
                 arrayOfMessages[0].GetComponent<Message>().responseTimer.gameObject.SetActive(false);
+                arrayOfMessages[0].GetComponent<Message>().MessageIsReady = true;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControls>().playerIsHoldingMessage = true;
+                arrayOfMessages.Remove(arrayOfMessages[0]);
 
             }
 
         }
+    }
+}
+
+public class ResponseSender: entry
+{
+    List<MessagesEntryPosition> messageEntryPos;
+
+    public ResponseSender(List<MessagesEntryPosition> messageSlotPos)
+    {
+        messageEntryPos = messageSlotPos;
+    }
+
+    public override void SetMessageToSlot(Transform message)
+    {
+        if (message.GetComponent<Message>().MessageIsReady)
+        {
+            Debug.Log("Sending!!!!");
+            message.transform.parent = null;
+            message.transform.position = messageEntryPos[0].messageSlot.transform.position;
+            message.GetComponent<Message>().SendResponseToUser();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControls>().playerIsHoldingMessage = false;
+        } 
+    }
+}
+
+public class MessageDestroyer: entry
+ {
+
+
+    List<MessagesEntryPosition> messageEntryPos;
+
+    public MessageDestroyer(List<MessagesEntryPosition> messageSlotPos)
+    {
+        messageEntryPos = messageSlotPos;
+    }
+
+    public override void SetMessageToSlot(Transform message)
+    {
+        message.transform.parent = null;
+        message.transform.position = messageEntryPos[0].messageSlot.transform.position;
+        message.GetComponent<Message>().GetDestoryed();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControls>().playerIsHoldingMessage = false;
+        Debug.LogWarning(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControls>().playerIsHoldingMessage = false);
     }
 }
 
