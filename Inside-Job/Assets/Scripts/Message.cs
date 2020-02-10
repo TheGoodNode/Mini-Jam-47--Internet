@@ -15,7 +15,7 @@ public class Message : MonoBehaviour
 {
     public MessageTypes messageType;
 
-    public float messageDelay = 5;
+    public float messageDelay = 10;
     float countDown;
 
     [SerializeField]public TextMesh timer;
@@ -147,7 +147,6 @@ public class Message : MonoBehaviour
         Array values = Enum.GetValues(typeof(MessageTypes));
         System.Random random = new System.Random();
         MessageTypes randomMessageType = (MessageTypes)values.GetValue(random.Next(values.Length));
-        Debug.LogWarning(randomMessageType);
         return randomMessageType;
     }
 }

@@ -44,14 +44,14 @@ public class PlayerControls : MonoBehaviour
                 }
             }
         }
-
-
-
-        this.MovePlayer();
-
     }
 
-   
+    private void FixedUpdate()
+    {
+        this.MovePlayer();
+    }
+
+
 
 
     private void MovePlayer()
@@ -88,8 +88,11 @@ public class PlayerControls : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        
+
         if (other.gameObject.name == "EntryPoint")
-        {
+        { 
+
             playerIsOverEntryPoint = false;
             playerIsOverRequestEntryPoint = false;
         }

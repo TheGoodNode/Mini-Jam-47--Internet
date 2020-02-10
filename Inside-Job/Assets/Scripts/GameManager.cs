@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         spawnManager = FindObjectOfType<SpawnManager>();
         instance.amountResponseSentText = GetComponent<GameObject>().GetComponent<TextMeshProUGUI>();
         instance.amountResponseSentText.text = $"Sent Response: {defaultAmountResponseSent}";
@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour
     {
         instance.defaultAmountResponseSent += 1;
         instance.amountResponseSentText.text = $"Sent Response: {instance.defaultAmountResponseSent}";
+
+        if(instance.defaultAmountResponseSent >= 50)
+        {
+
+        }
     }
 
     public void EndGame()

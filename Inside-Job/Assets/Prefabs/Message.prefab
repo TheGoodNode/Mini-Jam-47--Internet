@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageType: 0
-  messageDelay: 20
+  messageDelay: 60
   timer: {fileID: 1376729757308296975}
   messageText: 
   MessageText: {fileID: 1519656497}

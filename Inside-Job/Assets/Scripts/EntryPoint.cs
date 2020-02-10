@@ -55,7 +55,31 @@ public class EntryPoint : MonoBehaviour
         }
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.name == "Player")
+        {
+        Debug.Log("IN");
+        Color tmp = gameObject.GetComponent<SpriteRenderer>().color;
+        tmp.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = tmp;
+
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.gameObject.name == "Player")
+        {
+            Debug.Log("OUT");
+            Color tmp = gameObject.GetComponent<SpriteRenderer>().color;
+            tmp.a = 0.5f;
+            gameObject.GetComponent<SpriteRenderer>().color = tmp;
+        }
+        
+    }
+
+
 
 
 }
@@ -65,18 +89,11 @@ public class Request : entry
     List<MessagesEntryPosition> messageEntryPos;
     List<Transform> arrayOfMessages;
 
-    //public bool ListIsFull { get; set; }
-
-
     public Request(List<MessagesEntryPosition> messageSlotPos, List<Transform> messageArray)
     {
         messageEntryPos = messageSlotPos;
         arrayOfMessages = messageArray;
     }
-
-    
-
-
 
     public override void SetMessageToSlot(Transform message)
     {
@@ -91,7 +108,7 @@ public class Request : entry
             }
 
 
-            if (messageEntryPos.IndexOf(messageEntryPos[index]) == 0)
+            if (arrayOfMessages.Count == 1)
             {
                 ListIsFull = true;
             }
@@ -100,8 +117,10 @@ public class Request : entry
 
     public override void GiveMessageToPlayer(GameObject holder)
     {
+
         if (arrayOfMessages[0])
         {
+            Debug.LogWarning("there is a message in first index ");
             if (!holder.GetComponentInParent<PlayerControls>().playerIsHoldingMessage)
             {
                 Debug.LogWarning("NOOOO!!!!");
@@ -113,25 +132,19 @@ public class Request : entry
                 arrayOfMessages[0].transform.position = holder.transform.position;
                 holder.GetComponentInParent<PlayerControls>().playerIsHoldingMessage = true;
                 messageEntryPos[0].slotIsAquired = false;
+                
                 ListIsFull = false;
-                //if second is aquired
                 if (arrayOfMessages[1])
                 {
+                    Debug.Log("moving second message to first");
                     //moving second message to first slot
                     arrayOfMessages[1].transform.position = messageEntryPos[0].messageSlot.transform.position;
                     messageEntryPos[1].slotIsAquired = false;
                     messageEntryPos[0].slotIsAquired = true;
-
-                    arrayOfMessages.Remove(arrayOfMessages[0]);
-
                 }
-                //if second is empty
-                else
-                {
-                    messageEntryPos[0].slotIsAquired = false;
-                    arrayOfMessages.Remove(arrayOfMessages[0]);
-                }
+                arrayOfMessages.Remove(arrayOfMessages[0]);
             }
+            
         }
     }
 }

@@ -26,13 +26,14 @@ public class SpawnManager : MonoBehaviour
 
     }
 
+    public float spawnDelay = 4;
 
     IEnumerator CreateMessage()
     {
 
         while (gameIsOn)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(spawnDelay);
 
             System.Random random = new System.Random();
             int index = random.Next(0, EntryPoints.Length);
