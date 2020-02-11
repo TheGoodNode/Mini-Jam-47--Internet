@@ -108,7 +108,7 @@ public class Request : entry
             }
 
 
-            if (arrayOfMessages.Count == 1)
+            if (arrayOfMessages.Count >= 1)
             {
                 ListIsFull = true;
             }

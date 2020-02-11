@@ -10,26 +10,31 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI amountResponseSentText;
 
-    [HideInInspector]public int defaultAmountResponseSent = 0;
+    [HideInInspector] public int defaultAmountResponseSent = 0;
+
+    public GameObject GameOverScreen;
+    public GameObject WinScreen;
+    public GameObject TutorialScreen;
 
     SpawnManager spawnManager;
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
-        }else if (instance != null)
+        } else if (instance != null)
         {
             Destroy(gameObject);
         }
     }
 
-
+    [HideInInspector] public bool gameIsOn = false;
     // Start is called before the first frame update
     void Start()
-    { 
-        spawnManager = FindObjectOfType<SpawnManager>();
+    {
+        instance.TutorialScreen.SetActive(true);
+        spawnManager = gameObject.GetComponent<SpawnManager>();
         instance.amountResponseSentText = GetComponent<GameObject>().GetComponent<TextMeshProUGUI>();
         instance.amountResponseSentText.text = $"Sent Response: {defaultAmountResponseSent}";
     }
@@ -37,7 +42,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void IncrementAmountResponseSent()
@@ -45,20 +50,40 @@ public class GameManager : MonoBehaviour
         instance.defaultAmountResponseSent += 1;
         instance.amountResponseSentText.text = $"Sent Response: {instance.defaultAmountResponseSent}";
 
-        if(instance.defaultAmountResponseSent >= 50)
+        if (instance.defaultAmountResponseSent >= 50)
         {
-
+            WinGame();
         }
     }
 
-    public void EndGame()
+    public void WinGame()
     {
-        Debug.Log("Game ended");
+        WinScreen.SetActive(true);
+        gameIsOn = false;
     }
+
+
 
     public void RestartGame()
     {
-        spawnManager.StopAllCoroutines();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void StartGame()
+    {
+        gameIsOn = true;
+        TutorialScreen.SetActive(false);
+        StartCoroutine(spawnManager.CreateMessage());
+    }
+
+    public void LoseGame()
+    {
+        GameOverScreen.SetActive(true);
+        gameIsOn = false;
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

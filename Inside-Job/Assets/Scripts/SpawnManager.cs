@@ -14,11 +14,12 @@ public class SpawnManager : MonoBehaviour
     [HideInInspector]
     public bool gameIsOn = false;
 
+
+    
     private void Start()
     {
         gameIsOn = true;
         EntryPoints = GameObject.FindGameObjectsWithTag("RequestEntryPoint");
-        StartCoroutine(CreateMessage());
     }
 
     private void Update()
@@ -28,10 +29,10 @@ public class SpawnManager : MonoBehaviour
 
     public float spawnDelay = 4;
 
-    IEnumerator CreateMessage()
+    public IEnumerator CreateMessage()
     {
 
-        while (gameIsOn)
+        while (GameManager.instance.gameIsOn)
         {
             yield return new WaitForSeconds(spawnDelay);
 

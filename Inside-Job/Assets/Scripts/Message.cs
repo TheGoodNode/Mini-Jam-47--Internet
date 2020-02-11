@@ -44,11 +44,15 @@ public class Message : MonoBehaviour
     [HideInInspector] public bool MessageIsReady = false;
     private void Update()
     {
-        if(countDown >= 0)
+        if (countDown >= 0)
         {
             countDown -= Time.deltaTime;
             //GameManager.instance.EndGame();
             timer.text = Convert.ToInt32(countDown).ToString();
+            if (countDown <= 0)
+            {
+                GameManager.instance.LoseGame();
+            }
         }
 
         if (startedCreatingResponse)
