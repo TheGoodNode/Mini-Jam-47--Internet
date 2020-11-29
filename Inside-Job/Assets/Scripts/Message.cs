@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public struct MessageStruct{
+    public string messageText;
+    public float time;
+    public MessageTypes type;
+}
+
 public enum MessageTypes
 {
     Authentication,

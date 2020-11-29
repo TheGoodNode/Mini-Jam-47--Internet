@@ -256,6 +256,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8975d065cafb21d47bd2ba22692b5232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerIsOverEntryPoint: 0
+  playerIsHoldingMessage: 0
+  playerIsOverRequestEntryPoint: 0
+  requestHolder: {fileID: 2404093312037202592}
 --- !u!114 &2404093311233858108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,9 +274,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerSpeed: 13
   requestHolder: {fileID: 2404093312037202592}
-  playerIsOverEntryPoint: 0
-  playerIsHoldingMessage: 0
-  playerIsOverRequestEntryPoint: 0
 --- !u!1 &2404093312037202592
 GameObject:
   m_ObjectHideFlags: 0

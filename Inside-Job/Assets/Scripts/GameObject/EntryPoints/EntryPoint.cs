@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 
@@ -13,21 +14,43 @@ public enum EntryPointType
 abstract public class EntryPoint : MonoBehaviour
 {
 
-
+    [HideInInspector] public List<MessageStruct> listOfMessages;
+    [HideInInspector] public bool ListIsFull = false;
     [HideInInspector] public EntryPointType currentEntryPoint = EntryPointType.request;
 
+    public int maxSlots;
 
-    public virtual void SetMessageToSlot()
+    public virtual void SetMessageToSlot(GameObject message)
     {
         print("Set message to slot");
     }
 
 
-    public virtual void GetMessageFromSlot()
+    public virtual void GetMessageFromSlot(GameObject message)
     {
         print("Get message From slot");
     }
 
+
+    public void AddMessageToList(){
+
+    }
+
+    public bool CheckIfSlotsAreFull(){
+        if(listOfMessages.Count >= maxSlots){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public bool checkIfHasMessages(){
+        if(listOfMessages.Count > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -54,6 +77,8 @@ abstract public class EntryPoint : MonoBehaviour
 
     }
 }
+
+
 
 // [System.Serializable]
 // public class MessagesEntryPosition

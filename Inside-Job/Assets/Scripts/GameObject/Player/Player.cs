@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool playerIsHoldingMessage = false;
     [HideInInspector] public bool playerIsOverRequestEntryPoint = false;
 
+
+    public GameObject requestHolder;
     void Update()
     {
         if (playerIsOverEntryPoint)
@@ -28,8 +30,8 @@ public class Player : MonoBehaviour
                 }
                 else if (playerIsHoldingMessage && !playerIsOverRequestEntryPoint)
                 {
-                    // Transform message = requestHolder.transform.GetChild(0);
-                    selectedEntry.SetMessageToSlot();
+                    GameObject message = requestHolder.transform.GetChild(0).gameObject;
+                    selectedEntry.SetMessageToSlot(message);
                 }
             }
         }

@@ -9,7 +9,9 @@ public class SpawnManager : MonoBehaviour
     public GameObject messagePrefab;
 
 
-    GameObject[] EntryPoints;
+    public Transform requestEntryPointHolder;
+    private List<GameObject> allRequestEntryPoints;
+
 
     [HideInInspector]
     public bool gameIsOn = false;
@@ -19,8 +21,20 @@ public class SpawnManager : MonoBehaviour
     private void Start()
     {
         gameIsOn = true;
-        EntryPoints = GameObject.FindGameObjectsWithTag("RequestEntryPoint");
+
+        allRequestEntryPoints = getAllRequestEntryPoints();
     }
+
+    private List<GameObject> getAllRequestEntryPoints(){
+        List<GameObject> tempArray = new List<GameObject>();
+
+        foreach(Transform requestEntryPoint in requestEntryPointHolder){
+            tempArray.Add(requestEntryPoint.gameObject);
+        }
+
+        return tempArray;
+    }
+
 
     private void Update()
     {
@@ -37,14 +51,14 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(spawnDelay);
 
             System.Random random = new System.Random();
-            int index = random.Next(0, EntryPoints.Length);
-            EntryPoint randomEntry = EntryPoints[index].GetComponent<EntryPoint>();
+            int index = random.Next(0, allRequestEntryPoints.Count - 1);
+            EntryPoint randomEntry = allRequestEntryPoints[index].GetComponent<RequestEntryPoint>();
 
-            // if (!randomEntry.currentEntryPoint.ListIsFull)
-            // {
-            //     Transform message = Instantiate(messagePrefab).transform;
-            //     randomEntry.currentEntryPoint.SetMessageToSlot(message);
-            // }
+            if (randomEntry.ListIsFull == false)
+            {
+                GameObject message = Instantiate(messagePrefab).gameObject;
+                randomEntry.SetMessageToSlot(message);
+            }
         }
     }
 

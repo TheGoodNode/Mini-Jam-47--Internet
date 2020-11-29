@@ -7,7 +7,6 @@ public class DestroyMessageEP : EntryPoint
    void Start()
     {
         currentEntryPoint = EntryPointType.messageDestroyer;
-        SetMessageToSlot();
     }
 
     void Update()
@@ -15,7 +14,7 @@ public class DestroyMessageEP : EntryPoint
         
     }
 
-    public override void SetMessageToSlot()
+    public override void SetMessageToSlot(GameObject message)
     {
         print("Set message from message detroy Entry Point");
     }

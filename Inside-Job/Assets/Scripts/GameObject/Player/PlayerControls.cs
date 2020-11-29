@@ -7,8 +7,6 @@ public class PlayerControls : MonoBehaviour
 
     public float PlayerSpeed;
 
-    public GameObject requestHolder;
-
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();

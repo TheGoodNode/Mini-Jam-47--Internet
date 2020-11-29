@@ -5,7 +5,6 @@ public class RequestEntryPoint : EntryPoint
     void Start()
     {
         currentEntryPoint = EntryPointType.request;
-        SetMessageToSlot();
     }
 
     void Update()
@@ -13,8 +12,10 @@ public class RequestEntryPoint : EntryPoint
         
     }
 
-    public override void SetMessageToSlot()
+    public override void SetMessageToSlot(GameObject message)
     {
+        if(CheckIfSlotsAreFull() == true) return;
+
         print("Set message from Request Entry Point");
     }
 

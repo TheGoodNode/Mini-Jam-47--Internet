@@ -5,7 +5,6 @@ public class ResponseSenderEP : EntryPoint
 void Start()
     {
         currentEntryPoint = EntryPointType.responseSender;
-        SetMessageToSlot();
     }
 
     void Update()
@@ -13,7 +12,7 @@ void Start()
         
     }
 
-    public override void SetMessageToSlot()
+    public override void SetMessageToSlot(GameObject message)
     {
         print("Set message from Response sender Entry Point");
     }
