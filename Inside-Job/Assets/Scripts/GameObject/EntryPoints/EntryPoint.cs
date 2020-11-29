@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 
@@ -16,7 +14,7 @@ abstract public class EntryPoint : MonoBehaviour
 {
 
 
-    public EntryPointType currentEntryPoint = EntryPointType.request;
+    [HideInInspector] public EntryPointType currentEntryPoint = EntryPointType.request;
 
 
     public virtual void SetMessageToSlot()

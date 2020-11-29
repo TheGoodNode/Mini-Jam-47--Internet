@@ -40,11 +40,11 @@ public class SpawnManager : MonoBehaviour
             int index = random.Next(0, EntryPoints.Length);
             EntryPoint randomEntry = EntryPoints[index].GetComponent<EntryPoint>();
 
-            if (!randomEntry.currentEntryPoint.ListIsFull)
-            {
-                Transform message = Instantiate(messagePrefab).transform;
-                randomEntry.currentEntryPoint.SetMessageToSlot(message);
-            }
+            // if (!randomEntry.currentEntryPoint.ListIsFull)
+            // {
+            //     Transform message = Instantiate(messagePrefab).transform;
+            //     randomEntry.currentEntryPoint.SetMessageToSlot(message);
+            // }
         }
     }
 

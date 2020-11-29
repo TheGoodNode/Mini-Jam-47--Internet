@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
                 if (!playerIsHoldingMessage)
                 {
                     Debug.Log("Getting Message");
-                    // selectedEntry.GiveMessageToPlayer(requestHolder);
+                    selectedEntry.GiveMessageToPlayer();
                 }
                 else if (playerIsHoldingMessage && !playerIsOverRequestEntryPoint)
                 {
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
             playerIsOverEntryPoint = true;
             EntryPoint entryPoint = other.gameObject.GetComponent<EntryPoint>();
             selectedEntry = entryPoint;
-            if (other.gameObject.tag == "RequestEntryPoint")
+            if (other.gameObject.CompareTag("RequestEntryPoint"))
             {
                 Debug.LogWarning("over request point");
                 playerIsOverRequestEntryPoint = true;

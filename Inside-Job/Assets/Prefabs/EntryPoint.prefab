@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 984442344602042050}
   - component: {fileID: 984442344602042054}
   - component: {fileID: 984442344602042055}
-  - component: {fileID: 984442344602042048}
+  - component: {fileID: 5724512061700141003}
   m_Layer: 0
   m_Name: EntryPoint
   m_TagString: RequestEntryPoint
@@ -133,7 +133,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.1, y: 5.1}
   m_EdgeRadius: 0
---- !u!114 &984442344602042048
+--- !u!114 &5724512061700141003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,16 +142,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 984442344602042051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb1975e25096ac4385e8f98c3dba793, type: 3}
+  m_Script: {fileID: 11500000, guid: c8cc44e71bd71534bb1411537b0bcdfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entryPointType: 0
-  messageEntryPos:
-  - messageSlot: {fileID: 7723915302237407988}
-    slotIsAquired: 0
-  - messageSlot: {fileID: 3578991078965231268}
-    slotIsAquired: 0
-  arrayOfMessages: []
+  currentEntryPoint: 0
 --- !u!1 &3578991078965231268
 GameObject:
   m_ObjectHideFlags: 0
