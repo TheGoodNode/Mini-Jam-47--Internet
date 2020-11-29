@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 7125259403107071705}
   - component: {fileID: 7125259403107071704}
   - component: {fileID: 7125259403107071719}
-  - component: {fileID: 7125259403107071718}
+  - component: {fileID: 680582370847933957}
+  - component: {fileID: 632790888}
   m_Layer: 0
-  m_Name: EntryPoint 1
-  m_TagString: Untagged
+  m_Name: RequestEntryPoint
+  m_TagString: EntryPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +133,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.1, y: 5.1}
   m_EdgeRadius: 0
---- !u!114 &7125259403107071718
+--- !u!114 &680582370847933957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,14 +142,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7125259403107071717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb1975e25096ac4385e8f98c3dba793, type: 3}
+  m_Script: {fileID: 11500000, guid: 37abd049b37f613429e763f917a2b509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entryPointType: 1
-  messageEntryPos:
-  - messageSlot: {fileID: 7125259404116358462}
-    slotIsAquired: 0
-  arrayOfMessages: []
+  currentEntryPoint: 0
+--- !u!114 &632790888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7125259403107071717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37abd049b37f613429e763f917a2b509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentEntryPoint: 0
 --- !u!1 &7125259404116358462
 GameObject:
   m_ObjectHideFlags: 0
