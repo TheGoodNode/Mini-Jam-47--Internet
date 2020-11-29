@@ -93,10 +93,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2404093311233858109}
   - component: {fileID: 2404093311233858106}
-  - component: {fileID: 2404093311233858108}
   - component: {fileID: 2404093311233858111}
   - component: {fileID: 2404093311233858110}
   - component: {fileID: 1956769011}
+  - component: {fileID: 8547698019849474362}
+  - component: {fileID: 2404093311233858108}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -170,23 +171,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2404093311233858108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2404093311233858107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d722642b299d40e428440462ac9bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerSpeed: 13
-  requestHolder: {fileID: 2404093312037202592}
-  playerIsOverEntryPoint: 0
-  playerIsHoldingMessage: 0
-  playerIsOverRequestEntryPoint: 0
 --- !u!50 &2404093311233858111
 Rigidbody2D:
   serializedVersion: 4
@@ -260,6 +244,35 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 29.574762, y: 23.04419}
   m_EdgeRadius: 0
+--- !u!114 &8547698019849474362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2404093311233858107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8975d065cafb21d47bd2ba22692b5232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2404093311233858108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2404093311233858107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d722642b299d40e428440462ac9bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerSpeed: 13
+  requestHolder: {fileID: 2404093312037202592}
+  playerIsOverEntryPoint: 0
+  playerIsHoldingMessage: 0
+  playerIsOverRequestEntryPoint: 0
 --- !u!1 &2404093312037202592
 GameObject:
   m_ObjectHideFlags: 0
