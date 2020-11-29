@@ -24,14 +24,12 @@ public class Player : MonoBehaviour
                 Debug.Log("OVER HERE!!!" + playerIsHoldingMessage);
                 if (!playerIsHoldingMessage)
                 {
-                    Debug.Log("Getting Message");
-                    selectedEntry.GiveMessageToPlayer();
+                    selectedEntry.GetMessageFromSlot();
                 }
                 else if (playerIsHoldingMessage && !playerIsOverRequestEntryPoint)
                 {
-                    Debug.Log("Setting Message");
                     // Transform message = requestHolder.transform.GetChild(0);
-                    // selectedEntry.SetMessageToSlot(message);
+                    selectedEntry.SetMessageToSlot();
                 }
             }
         }

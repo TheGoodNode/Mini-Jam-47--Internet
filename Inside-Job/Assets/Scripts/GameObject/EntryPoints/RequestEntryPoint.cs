@@ -18,7 +18,7 @@ public class RequestEntryPoint : EntryPoint
         print("Set message from Request Entry Point");
     }
 
-    public override void GiveMessageToPlayer()
+    public override void GetMessageFromSlot()
     {
         print("Give message to player from Request Entry point");
     }

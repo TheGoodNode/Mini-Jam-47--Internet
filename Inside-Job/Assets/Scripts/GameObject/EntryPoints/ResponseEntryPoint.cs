@@ -19,7 +19,7 @@ public class ResponseEntryPoint : EntryPoint
         print("Set message from Response Entry Point");
     }
 
-    public override void GiveMessageToPlayer()
+    public override void GetMessageFromSlot()
     {
         print("Give message to player from Response Entry point");
     }

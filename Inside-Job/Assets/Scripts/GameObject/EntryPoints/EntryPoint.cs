@@ -19,13 +19,13 @@ abstract public class EntryPoint : MonoBehaviour
 
     public virtual void SetMessageToSlot()
     {
-        print("Set Message to Slot");
+        print("Set message to slot");
     }
 
 
-    public virtual void GiveMessageToPlayer()
+    public virtual void GetMessageFromSlot()
     {
-        print("Give message to player");
+        print("Get message From slot");
     }
 
 

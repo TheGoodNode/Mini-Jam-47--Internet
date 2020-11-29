@@ -20,7 +20,7 @@ public class DestroyMessageEP : EntryPoint
         print("Set message from message detroy Entry Point");
     }
 
-    public override void GiveMessageToPlayer()
+    public override void GetMessageFromSlot()
     {
         print("Give message to player from message detroy Entry point");
     }
