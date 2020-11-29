@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public int defaultAmountResponseSent = 0;
 
+
+    public Player player;
+
+
     public GameObject GameOverScreen;
     public GameObject WinScreen;
     public GameObject TutorialScreen;
