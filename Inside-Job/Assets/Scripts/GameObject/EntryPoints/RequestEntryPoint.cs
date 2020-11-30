@@ -19,7 +19,7 @@ public class RequestEntryPoint : EntryPoint
         print("Set message from Request Entry Point");
     }
 
-    public override void GetMessageFromSlot()
+    public override void GetMessageFromSlot(GameObject message)
     {
         print("Give message to player from Request Entry point");
     }

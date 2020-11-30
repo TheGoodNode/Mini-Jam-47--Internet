@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
                 Debug.Log("OVER HERE!!!" + playerIsHoldingMessage);
                 if (!playerIsHoldingMessage)
                 {
-                    selectedEntry.GetMessageFromSlot();
+                    selectedEntry.GetMessageFromSlot(new Message().gameObject); //!Needs to be fixed, temp fix
                 }
                 else if (playerIsHoldingMessage && !playerIsOverRequestEntryPoint)
                 {

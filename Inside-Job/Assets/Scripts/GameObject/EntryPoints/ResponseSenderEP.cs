@@ -17,7 +17,7 @@ void Start()
         print("Set message from Response sender Entry Point");
     }
 
-    public override void GetMessageFromSlot()
+    public override void GetMessageFromSlot(GameObject message)
     {
         print("Give message to player from Response sender Entry point");
     }
