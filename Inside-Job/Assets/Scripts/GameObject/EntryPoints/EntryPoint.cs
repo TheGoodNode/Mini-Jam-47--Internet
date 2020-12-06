@@ -14,11 +14,17 @@ public enum EntryPointType
 abstract public class EntryPoint : MonoBehaviour
 {
 
+    public GameObject slotsForMessages;
+
+    private void Start() {
+        maxSlots = UtilityHelper.GetAllChilds(slotsForMessages).Count;
+    }
+
     [HideInInspector] public List<MessageStruct> listOfMessages;
     [HideInInspector] public bool ListIsFull = false;
     [HideInInspector] public EntryPointType currentEntryPoint = EntryPointType.request;
 
-    public int maxSlots;
+    [HideInInspector] public int maxSlots;
 
     public virtual void SetMessageToSlot(GameObject message)
     {
