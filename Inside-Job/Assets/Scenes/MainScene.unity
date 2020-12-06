@@ -3307,11 +3307,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RequestEntryPoint (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 7125259404116358463, guid: 257d6262e3a8c0741ac27cd08b1953bd,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 257d6262e3a8c0741ac27cd08b1953bd, type: 3}
 --- !u!4 &1227900318 stripped
