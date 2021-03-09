@@ -38,12 +38,12 @@ public class Message : MonoBehaviour
 
     private void Start()
     {
-        responseTimer.text = Convert.ToInt32(responseTimeDelay).ToString();
-        countDown = messageDelay;
-        timer.text = countDown.ToString();
-        messageType = AssignMessageType();
-        messageText = HandleReturnMessageText();
-        MessageText.text = messageText;
+        // responseTimer.text = Convert.ToInt32(responseTimeDelay).ToString();
+        // countDown = messageDelay;
+        // timer.text = countDown.ToString();
+        // messageType = AssignMessageType();
+        // messageText = HandleReturnMessageText();
+        // MessageText.text = messageText;
     }
 
     [HideInInspector] public bool startedCreatingResponse = false;

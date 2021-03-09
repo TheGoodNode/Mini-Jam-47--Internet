@@ -11,24 +11,48 @@ public enum EntryPointType
     messageDestroyer
 }
 
+public class Slot
+{
+    public bool isUsed = false;
+    public Transform slotPosition;
+    public Slot(Transform slotPosition){
+        this.slotPosition = slotPosition;
+    }
+}
+
+
 abstract public class EntryPoint : MonoBehaviour
 {
 
     public GameObject slotsForMessages;
 
     private void Start() {
-        maxSlots = UtilityHelper.GetAllChilds(slotsForMessages).Count;
+        List<GameObject> allSlots = UtilityHelper.GetAllChilds(slotsForMessages);
+        allSlots.ForEach(slot =>{
+            slots.Add(new Slot(slot.transform));
+        });
     }
 
-    [HideInInspector] public List<MessageStruct> listOfMessages;
+    [HideInInspector] public List<GameObject> listOfMessages;
     [HideInInspector] public bool ListIsFull = false;
     [HideInInspector] public EntryPointType currentEntryPoint = EntryPointType.request;
 
-    [HideInInspector] public int maxSlots;
+    [HideInInspector] public List<Slot> slots;
 
     public virtual void SetMessageToSlot(GameObject message)
     {
         print("Set message to slot");
+    }
+
+    private void AddMessageToSlot(GameObject messagae){
+        for(var i = 0; i < slots.Count - 1; i++){
+            Slot slot = slots[i];
+            if(slot.isUsed == false){
+                messagae.transform.position = slot.slotPosition.position;
+                listOfMessages.Add(messagae);
+                return;
+            }
+        }
     }
 
 
@@ -37,13 +61,24 @@ abstract public class EntryPoint : MonoBehaviour
         print("Get message From slot");
     }
 
+    private void GetFirstMessage(){
+        GameObject firstMessage = listOfMessages[0];
+
+    }
+
+    private void UpdateSlots(){
+        listOfMessages.ForEach(message =>{
+            
+        });
+    }
+
 
     public void AddMessageToList(){
 
     }
 
     public bool CheckIfSlotsAreFull(){
-        if(listOfMessages.Count >= maxSlots){
+        if(listOfMessages.Count >= slots.Count){
             return true;
         }else{
             return false;
